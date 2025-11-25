@@ -15,7 +15,7 @@ async function main() {
 
   // ⚠️ Set your Factory + WETH contract addresses
   const FACTORY_ADDRESS = "0xYourFactoryAddress";
-  const WETH_ADDRESS = "0xYourWETHAddress";
+  const WETH_ADDRESS = "0x911b4000D3422F482F4062a913885f7b035382Df";
 
   console.log("Factory address:", FACTORY_ADDRESS);
   console.log("WETH address:", WETH_ADDRESS);
