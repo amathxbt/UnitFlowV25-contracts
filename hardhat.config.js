@@ -16,7 +16,7 @@ module.exports = {
     arcTestnet: {
       url: "https://rpc.testnet.arc.network",
       chainId: 5042002,
-      accounts: ["REDACTED_PRIVATE_KEY"],
+      accounts: ["0xa52fb8ccd7e2cab0469eb61ba9b6035584d3"],
       gasPrice: "auto",
     },
   },
