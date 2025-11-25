@@ -15,7 +15,7 @@ async function main() {
 
   // 👉 SET THESE BEFORE DEPLOYING
   const FACTORY_ADDRESS = "0xYourFactoryAddressHere";
-  const WETH_ADDRESS = "0xYourWETHAddressHere";
+  const WETH_ADDRESS = "0x911b4000D3422F482F4062a913885f7b035382Df";
 
   console.log("Using Factory:", FACTORY_ADDRESS);
   console.log("Using WETH:", WETH_ADDRESS);
