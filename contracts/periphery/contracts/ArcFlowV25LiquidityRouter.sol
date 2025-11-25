@@ -1,6 +1,6 @@
 pragma solidity =0.6.6;
 
-import '@uniswap/v2-core/contracts/interfaces/IArcFlowV25Factory.sol';
+import '../core/contracts/interfaces/IArcFlowV25Factory.sol';
 import '@uniswap/lib/contracts/libraries/TransferHelper.sol';
 
 import './interfaces/IArcFlowV25LiquidityRouter.sol';
