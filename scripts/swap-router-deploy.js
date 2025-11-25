@@ -15,14 +15,14 @@ async function main() {
 
   // 👉 SET THESE BEFORE DEPLOYING
   const FACTORY_ADDRESS = "0xYourFactoryAddressHere";
-  const WETH_ADDRESS = "0x911b4000D3422F482F4062a913885f7b035382Df";
+  const WUSDC_ADDRESS = "0x911b4000D3422F482F4062a913885f7b035382Df";
 
   console.log("Using Factory:", FACTORY_ADDRESS);
-  console.log("Using WETH:", WETH_ADDRESS);
+  console.log("Using WUSDC:", WUSDC_ADDRESS);
 
   console.log("\n⏳ Deploying router...");
   const Router = await ethers.getContractFactory("ArcFlowV25SwapRouter");
-  const router = await Router.deploy(FACTORY_ADDRESS, WETH_ADDRESS);
+  const router = await Router.deploy(FACTORY_ADDRESS, WUSDC_ADDRESS);
 
   await router.waitForDeployment();
   const routerAddress = await router.getAddress();
@@ -44,7 +44,7 @@ async function main() {
 
   console.log("\n📌 Verify with:");
   console.log(
-    `npx hardhat verify --network arcTestnet ${routerAddress} "${FACTORY_ADDRESS}" "${WETH_ADDRESS}"`
+    `npx hardhat verify --network arcTestnet ${routerAddress} "${FACTORY_ADDRESS}" "${WUSDC_ADDRESS}"`
   );
 }
 

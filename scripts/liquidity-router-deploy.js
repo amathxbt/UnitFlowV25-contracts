@@ -13,17 +13,17 @@ async function main() {
   const balance = await ethers.provider.getBalance(deployer.address);
   console.log("Balance:", ethers.formatEther(balance), "ETH\n");
 
-  // ⚠️ Set your Factory + WETH contract addresses
+  // ⚠️ Set your Factory + WUSDC contract addresses
   const FACTORY_ADDRESS = "0xYourFactoryAddress";
-  const WETH_ADDRESS = "0x911b4000D3422F482F4062a913885f7b035382Df";
+  const WUSDC_ADDRESS = "0x911b4000D3422F482F4062a913885f7b035382Df";
 
   console.log("Factory address:", FACTORY_ADDRESS);
-  console.log("WETH address:", WETH_ADDRESS);
+  console.log("WUSDC address:", WUSDC_ADDRESS);
 
   console.log("\n⏳ Deploying Liquidity Router...");
   const Router = await ethers.getContractFactory("ArcFlowV25LiquidityRouter");
 
-  const router = await Router.deploy(FACTORY_ADDRESS, WETH_ADDRESS);
+  const router = await Router.deploy(FACTORY_ADDRESS, WUSDC_ADDRESS);
   await router.waitForDeployment();
 
   const routerAddress = await router.getAddress();
@@ -45,7 +45,7 @@ async function main() {
 
   console.log("\n📌 Verify with:");
   console.log(
-    `npx hardhat verify --network arcTestnet ${routerAddress} "${FACTORY_ADDRESS}" "${WETH_ADDRESS}"`
+    `npx hardhat verify --network arcTestnet ${routerAddress} "${FACTORY_ADDRESS}" "${WUSDC_ADDRESS}"`
   );
 }
 

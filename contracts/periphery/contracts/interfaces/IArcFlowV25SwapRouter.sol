@@ -2,7 +2,7 @@ pragma solidity >=0.6.2;
 
 interface IArcFlowV25SwapRouter {
     function factory() external pure returns (address);
-    function WETH() external pure returns (address);
+    function WUSDC() external pure returns (address);
 
     function swapExactTokensForTokens(
         uint amountIn,

@@ -4,11 +4,11 @@ require("@nomicfoundation/hardhat-verify");
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: {
-    version: "0.8.20",
+    version: "0.5.16",
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200,
+        runs: 999999,
       },
     },
   },

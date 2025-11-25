@@ -7,26 +7,26 @@ import './interfaces/IArcFlowV25LiquidityRouter.sol';
 import './libraries/ArcFlowV25Library.sol';
 import './libraries/SafeMath.sol';
 import './interfaces/IERC20.sol';
-import './interfaces/IWETH.sol';
+import './interfaces/IWUSDC.sol';
 
 contract ArcFlowV25LiquidityRouter is IArcFlowV25LiquidityRouter {
     using SafeMath for uint;
 
     address public immutable override factory;
-    address public immutable override WETH;
+    address public immutable override WUSDC;
 
     modifier ensure(uint deadline) {
         require(deadline >= block.timestamp, 'ArcFlowV25LiquidityRouter: EXPIRED');
         _;
     }
 
-    constructor(address _factory, address _WETH) public {
+    constructor(address _factory, address _WUSDC) public {
         factory = _factory;
-        WETH = _WETH;
+        WUSDC = _WUSDC;
     }
 
     receive() external payable {
-        assert(msg.sender == WETH); // only accept ETH via fallback from the WETH contract
+        assert(msg.sender == WUSDC); // only accept ETH via fallback from the WUSDC contract
     }
 
     // **** ADD LIQUIDITY ****
@@ -86,16 +86,16 @@ contract ArcFlowV25LiquidityRouter is IArcFlowV25LiquidityRouter {
     ) external virtual override payable ensure(deadline) returns (uint amountToken, uint amountETH, uint liquidity) {
         (amountToken, amountETH) = _addLiquidity(
             token,
-            WETH,
+            WUSDC,
             amountTokenDesired,
             msg.value,
             amountTokenMin,
             amountETHMin
         );
-        address pair = ArcFlowV25Library.pairFor(factory, token, WETH);
+        address pair = ArcFlowV25Library.pairFor(factory, token, WUSDC);
         TransferHelper.safeTransferFrom(token, msg.sender, pair, amountToken);
-        IWETH(WETH).deposit{value: amountETH}();
-        assert(IWETH(WETH).transfer(pair, amountETH));
+        IWUSDC(WUSDC).deposit{value: amountETH}();
+        assert(IWUSDC(WUSDC).transfer(pair, amountETH));
         liquidity = IArcFlowV25Pair(pair).mint(to);
         // refund dust eth, if any
         if (msg.value > amountETH) TransferHelper.safeTransferETH(msg.sender, msg.value - amountETH);
@@ -130,7 +130,7 @@ contract ArcFlowV25LiquidityRouter is IArcFlowV25LiquidityRouter {
     ) public virtual override ensure(deadline) returns (uint amountToken, uint amountETH) {
         (amountToken, amountETH) = removeLiquidity(
             token,
-            WETH,
+            WUSDC,
             liquidity,
             amountTokenMin,
             amountETHMin,
@@ -138,7 +138,7 @@ contract ArcFlowV25LiquidityRouter is IArcFlowV25LiquidityRouter {
             deadline
         );
         TransferHelper.safeTransfer(token, to, amountToken);
-        IWETH(WETH).withdraw(amountETH);
+        IWUSDC(WUSDC).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);
     }
 
@@ -167,7 +167,7 @@ contract ArcFlowV25LiquidityRouter is IArcFlowV25LiquidityRouter {
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
     ) external virtual override returns (uint amountToken, uint amountETH) {
-        address pair = ArcFlowV25Library.pairFor(factory, token, WETH);
+        address pair = ArcFlowV25Library.pairFor(factory, token, WUSDC);
         uint value = approveMax ? uint(-1) : liquidity;
         IArcFlowV25Pair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
         (amountToken, amountETH) = removeLiquidityETH(token, liquidity, amountTokenMin, amountETHMin, to, deadline);
@@ -183,7 +183,7 @@ contract ArcFlowV25LiquidityRouter is IArcFlowV25LiquidityRouter {
     ) public virtual override ensure(deadline) returns (uint amountETH) {
         (, amountETH) = removeLiquidity(
             token,
-            WETH,
+            WUSDC,
             liquidity,
             amountTokenMin,
             amountETHMin,
@@ -191,7 +191,7 @@ contract ArcFlowV25LiquidityRouter is IArcFlowV25LiquidityRouter {
             deadline
         );
         TransferHelper.safeTransfer(token, to, IERC20(token).balanceOf(address(this)));
-        IWETH(WETH).withdraw(amountETH);
+        IWUSDC(WUSDC).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);
     }
 
@@ -204,7 +204,7 @@ contract ArcFlowV25LiquidityRouter is IArcFlowV25LiquidityRouter {
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
     ) external virtual override returns (uint amountETH) {
-        address pair = ArcFlowV25Library.pairFor(factory, token, WETH);
+        address pair = ArcFlowV25Library.pairFor(factory, token, WUSDC);
         uint value = approveMax ? uint(-1) : liquidity;
         IArcFlowV25Pair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
         amountETH = removeLiquidityETHSupportingFeeOnTransferTokens(
