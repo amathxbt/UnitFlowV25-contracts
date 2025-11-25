@@ -14,7 +14,7 @@ async function main() {
   console.log("Balance:", ethers.formatEther(balance), "ETH\n");
 
   // ⚠️ Set your Factory + WUSDC contract addresses
-  const FACTORY_ADDRESS = "0xYourFactoryAddress";
+  const FACTORY_ADDRESS = "0xdef1C84F6067073Ef7B2eA4AA366f41FF681E01b";
   const WUSDC_ADDRESS = "0x911b4000D3422F482F4062a913885f7b035382Df";
 
   console.log("Factory address:", FACTORY_ADDRESS);
