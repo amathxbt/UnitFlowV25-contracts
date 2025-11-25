@@ -1,7 +1,7 @@
 pragma solidity >=0.5.0;
 
-import '../core/contracts/interfaces/IArcFlowV25Pair.sol';
-import '../core/contracts/interfaces/IArcFlowV25Factory.sol';
+import '../../../core/contracts/interfaces/IArcFlowV25Pair.sol';
+import '../../../core/contracts/interfaces/IArcFlowV25Factory.sol';
 import '@uniswap/lib/contracts/libraries/Babylonian.sol';
 import '@uniswap/lib/contracts/libraries/FullMath.sol';
 

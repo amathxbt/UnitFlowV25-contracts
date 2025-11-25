@@ -1,6 +1,6 @@
 pragma solidity >=0.5.0;
 
-import '../core/contracts/interfaces/IArcFlowV25Pair.sol';
+import '../../../core/contracts/interfaces/IArcFlowV25Pair.sol';
 
 import "./SafeMath.sol";
 
