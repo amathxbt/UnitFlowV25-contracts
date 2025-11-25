@@ -26,7 +26,7 @@ contract ArcFlowV25SwapRouter is IArcFlowV25SwapRouter {
     }
 
     receive() external payable {
-        assert(msg.sender == WUSDC); // only accept ETH via fallback from the WUSDC contract
+        assert(msg.sender == WUSDC); // only accept USDC via fallback from the WUSDC contract
     }
 
     // **** SWAP ****
@@ -74,7 +74,7 @@ contract ArcFlowV25SwapRouter is IArcFlowV25SwapRouter {
         _swap(amounts, path, to);
     }
 
-    function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
+    function swapExactUSDCForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
         external
         virtual
         override
@@ -90,7 +90,7 @@ contract ArcFlowV25SwapRouter is IArcFlowV25SwapRouter {
         _swap(amounts, path, to);
     }
 
-    function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
+    function swapTokensForExactUSDC(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
         external
         virtual
         override
@@ -105,10 +105,10 @@ contract ArcFlowV25SwapRouter is IArcFlowV25SwapRouter {
         );
         _swap(amounts, path, address(this));
         IWUSDC(WUSDC).withdraw(amounts[amounts.length - 1]);
-        TransferHelper.safeTransferETH(to, amounts[amounts.length - 1]);
+        TransferHelper.safeTransferUSDC(to, amounts[amounts.length - 1]);
     }
 
-    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
+    function swapExactTokensForUSDC(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
         external
         virtual
         override
@@ -123,10 +123,10 @@ contract ArcFlowV25SwapRouter is IArcFlowV25SwapRouter {
         );
         _swap(amounts, path, address(this));
         IWUSDC(WUSDC).withdraw(amounts[amounts.length - 1]);
-        TransferHelper.safeTransferETH(to, amounts[amounts.length - 1]);
+        TransferHelper.safeTransferUSDC(to, amounts[amounts.length - 1]);
     }
 
-    function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)
+    function swapUSDCForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)
         external
         virtual
         override
@@ -141,7 +141,7 @@ contract ArcFlowV25SwapRouter is IArcFlowV25SwapRouter {
         assert(IWUSDC(WUSDC).transfer(ArcFlowV25Library.pairFor(factory, path[0], path[1]), amounts[0]));
         _swap(amounts, path, to);
         // refund dust eth, if any
-        if (msg.value > amounts[0]) TransferHelper.safeTransferETH(msg.sender, msg.value - amounts[0]);
+        if (msg.value > amounts[0]) TransferHelper.safeTransferUSDC(msg.sender, msg.value - amounts[0]);
     }
 
     // **** SWAP (supporting fee-on-transfer tokens) ****
@@ -183,7 +183,7 @@ contract ArcFlowV25SwapRouter is IArcFlowV25SwapRouter {
         );
     }
 
-    function swapExactETHForTokensSupportingFeeOnTransferTokens(
+    function swapExactUSDCForTokensSupportingFeeOnTransferTokens(
         uint amountOutMin,
         address[] calldata path,
         address to,
@@ -207,7 +207,7 @@ contract ArcFlowV25SwapRouter is IArcFlowV25SwapRouter {
         );
     }
 
-    function swapExactTokensForETHSupportingFeeOnTransferTokens(
+    function swapExactTokensForUSDCSupportingFeeOnTransferTokens(
         uint amountIn,
         uint amountOutMin,
         address[] calldata path,
@@ -227,7 +227,7 @@ contract ArcFlowV25SwapRouter is IArcFlowV25SwapRouter {
         uint amountOut = IERC20(WUSDC).balanceOf(address(this));
         require(amountOut >= amountOutMin, 'ArcFlowV25SwapRouter: INSUFFICIENT_OUTPUT_AMOUNT');
         IWUSDC(WUSDC).withdraw(amountOut);
-        TransferHelper.safeTransferETH(to, amountOut);
+        TransferHelper.safeTransferUSDC(to, amountOut);
     }
 
     // **** LIBRARY FUNCTIONS ****

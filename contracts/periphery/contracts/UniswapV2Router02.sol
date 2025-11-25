@@ -26,7 +26,7 @@ contract ArcFlowV25Router02 is IArcFlowV25Router02 {
     }
 
     receive() external payable {
-        assert(msg.sender == WUSDC); // only accept ETH via fallback from the WUSDC contract
+        assert(msg.sender == WUSDC); // only accept USDC via fallback from the WUSDC contract
     }
 
     // **** ADD LIQUIDITY ****
@@ -74,29 +74,29 @@ contract ArcFlowV25Router02 is IArcFlowV25Router02 {
         TransferHelper.safeTransferFrom(tokenB, msg.sender, pair, amountB);
         liquidity = IArcFlowV25Pair(pair).mint(to);
     }
-    function addLiquidityETH(
+    function addLiquidityUSDC(
         address token,
         uint amountTokenDesired,
         uint amountTokenMin,
-        uint amountETHMin,
+        uint amountUSDCMin,
         address to,
         uint deadline
-    ) external virtual override payable ensure(deadline) returns (uint amountToken, uint amountETH, uint liquidity) {
-        (amountToken, amountETH) = _addLiquidity(
+    ) external virtual override payable ensure(deadline) returns (uint amountToken, uint amountUSDC, uint liquidity) {
+        (amountToken, amountUSDC) = _addLiquidity(
             token,
             WUSDC,
             amountTokenDesired,
             msg.value,
             amountTokenMin,
-            amountETHMin
+            amountUSDCMin
         );
         address pair = ArcFlowV25Library.pairFor(factory, token, WUSDC);
         TransferHelper.safeTransferFrom(token, msg.sender, pair, amountToken);
-        IWUSDC(WUSDC).deposit{value: amountETH}();
-        assert(IWUSDC(WUSDC).transfer(pair, amountETH));
+        IWUSDC(WUSDC).deposit{value: amountUSDC}();
+        assert(IWUSDC(WUSDC).transfer(pair, amountUSDC));
         liquidity = IArcFlowV25Pair(pair).mint(to);
         // refund dust eth, if any
-        if (msg.value > amountETH) TransferHelper.safeTransferETH(msg.sender, msg.value - amountETH);
+        if (msg.value > amountUSDC) TransferHelper.safeTransferUSDC(msg.sender, msg.value - amountUSDC);
     }
 
     // **** REMOVE LIQUIDITY ****
@@ -117,26 +117,26 @@ contract ArcFlowV25Router02 is IArcFlowV25Router02 {
         require(amountA >= amountAMin, 'ArcFlowV25Router: INSUFFICIENT_A_AMOUNT');
         require(amountB >= amountBMin, 'ArcFlowV25Router: INSUFFICIENT_B_AMOUNT');
     }
-    function removeLiquidityETH(
+    function removeLiquidityUSDC(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountETHMin,
+        uint amountUSDCMin,
         address to,
         uint deadline
-    ) public virtual override ensure(deadline) returns (uint amountToken, uint amountETH) {
-        (amountToken, amountETH) = removeLiquidity(
+    ) public virtual override ensure(deadline) returns (uint amountToken, uint amountUSDC) {
+        (amountToken, amountUSDC) = removeLiquidity(
             token,
             WUSDC,
             liquidity,
             amountTokenMin,
-            amountETHMin,
+            amountUSDCMin,
             address(this),
             deadline
         );
         TransferHelper.safeTransfer(token, to, amountToken);
-        IWUSDC(WUSDC).withdraw(amountETH);
-        TransferHelper.safeTransferETH(to, amountETH);
+        IWUSDC(WUSDC).withdraw(amountUSDC);
+        TransferHelper.safeTransferUSDC(to, amountUSDC);
     }
     function removeLiquidityWithPermit(
         address tokenA,
@@ -153,57 +153,57 @@ contract ArcFlowV25Router02 is IArcFlowV25Router02 {
         IArcFlowV25Pair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
         (amountA, amountB) = removeLiquidity(tokenA, tokenB, liquidity, amountAMin, amountBMin, to, deadline);
     }
-    function removeLiquidityETHWithPermit(
+    function removeLiquidityUSDCWithPermit(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountETHMin,
+        uint amountUSDCMin,
         address to,
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
-    ) external virtual override returns (uint amountToken, uint amountETH) {
+    ) external virtual override returns (uint amountToken, uint amountUSDC) {
         address pair = ArcFlowV25Library.pairFor(factory, token, WUSDC);
         uint value = approveMax ? uint(-1) : liquidity;
         IArcFlowV25Pair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
-        (amountToken, amountETH) = removeLiquidityETH(token, liquidity, amountTokenMin, amountETHMin, to, deadline);
+        (amountToken, amountUSDC) = removeLiquidityUSDC(token, liquidity, amountTokenMin, amountUSDCMin, to, deadline);
     }
 
     // **** REMOVE LIQUIDITY (supporting fee-on-transfer tokens) ****
-    function removeLiquidityETHSupportingFeeOnTransferTokens(
+    function removeLiquidityUSDCSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountETHMin,
+        uint amountUSDCMin,
         address to,
         uint deadline
-    ) public virtual override ensure(deadline) returns (uint amountETH) {
-        (, amountETH) = removeLiquidity(
+    ) public virtual override ensure(deadline) returns (uint amountUSDC) {
+        (, amountUSDC) = removeLiquidity(
             token,
             WUSDC,
             liquidity,
             amountTokenMin,
-            amountETHMin,
+            amountUSDCMin,
             address(this),
             deadline
         );
         TransferHelper.safeTransfer(token, to, IERC20(token).balanceOf(address(this)));
-        IWUSDC(WUSDC).withdraw(amountETH);
-        TransferHelper.safeTransferETH(to, amountETH);
+        IWUSDC(WUSDC).withdraw(amountUSDC);
+        TransferHelper.safeTransferUSDC(to, amountUSDC);
     }
-    function removeLiquidityETHWithPermitSupportingFeeOnTransferTokens(
+    function removeLiquidityUSDCWithPermitSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountETHMin,
+        uint amountUSDCMin,
         address to,
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
-    ) external virtual override returns (uint amountETH) {
+    ) external virtual override returns (uint amountUSDC) {
         address pair = ArcFlowV25Library.pairFor(factory, token, WUSDC);
         uint value = approveMax ? uint(-1) : liquidity;
         IArcFlowV25Pair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
-        amountETH = removeLiquidityETHSupportingFeeOnTransferTokens(
-            token, liquidity, amountTokenMin, amountETHMin, to, deadline
+        amountUSDC = removeLiquidityUSDCSupportingFeeOnTransferTokens(
+            token, liquidity, amountTokenMin, amountUSDCMin, to, deadline
         );
     }
 
@@ -249,7 +249,7 @@ contract ArcFlowV25Router02 is IArcFlowV25Router02 {
         );
         _swap(amounts, path, to);
     }
-    function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
+    function swapExactUSDCForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
         external
         virtual
         override
@@ -264,7 +264,7 @@ contract ArcFlowV25Router02 is IArcFlowV25Router02 {
         assert(IWUSDC(WUSDC).transfer(ArcFlowV25Library.pairFor(factory, path[0], path[1]), amounts[0]));
         _swap(amounts, path, to);
     }
-    function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
+    function swapTokensForExactUSDC(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
         external
         virtual
         override
@@ -279,9 +279,9 @@ contract ArcFlowV25Router02 is IArcFlowV25Router02 {
         );
         _swap(amounts, path, address(this));
         IWUSDC(WUSDC).withdraw(amounts[amounts.length - 1]);
-        TransferHelper.safeTransferETH(to, amounts[amounts.length - 1]);
+        TransferHelper.safeTransferUSDC(to, amounts[amounts.length - 1]);
     }
-    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
+    function swapExactTokensForUSDC(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
         external
         virtual
         override
@@ -296,9 +296,9 @@ contract ArcFlowV25Router02 is IArcFlowV25Router02 {
         );
         _swap(amounts, path, address(this));
         IWUSDC(WUSDC).withdraw(amounts[amounts.length - 1]);
-        TransferHelper.safeTransferETH(to, amounts[amounts.length - 1]);
+        TransferHelper.safeTransferUSDC(to, amounts[amounts.length - 1]);
     }
-    function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)
+    function swapUSDCForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)
         external
         virtual
         override
@@ -313,7 +313,7 @@ contract ArcFlowV25Router02 is IArcFlowV25Router02 {
         assert(IWUSDC(WUSDC).transfer(ArcFlowV25Library.pairFor(factory, path[0], path[1]), amounts[0]));
         _swap(amounts, path, to);
         // refund dust eth, if any
-        if (msg.value > amounts[0]) TransferHelper.safeTransferETH(msg.sender, msg.value - amounts[0]);
+        if (msg.value > amounts[0]) TransferHelper.safeTransferUSDC(msg.sender, msg.value - amounts[0]);
     }
 
     // **** SWAP (supporting fee-on-transfer tokens) ****
@@ -353,7 +353,7 @@ contract ArcFlowV25Router02 is IArcFlowV25Router02 {
             'ArcFlowV25Router: INSUFFICIENT_OUTPUT_AMOUNT'
         );
     }
-    function swapExactETHForTokensSupportingFeeOnTransferTokens(
+    function swapExactUSDCForTokensSupportingFeeOnTransferTokens(
         uint amountOutMin,
         address[] calldata path,
         address to,
@@ -376,7 +376,7 @@ contract ArcFlowV25Router02 is IArcFlowV25Router02 {
             'ArcFlowV25Router: INSUFFICIENT_OUTPUT_AMOUNT'
         );
     }
-    function swapExactTokensForETHSupportingFeeOnTransferTokens(
+    function swapExactTokensForUSDCSupportingFeeOnTransferTokens(
         uint amountIn,
         uint amountOutMin,
         address[] calldata path,
@@ -396,7 +396,7 @@ contract ArcFlowV25Router02 is IArcFlowV25Router02 {
         uint amountOut = IERC20(WUSDC).balanceOf(address(this));
         require(amountOut >= amountOutMin, 'ArcFlowV25Router: INSUFFICIENT_OUTPUT_AMOUNT');
         IWUSDC(WUSDC).withdraw(amountOut);
-        TransferHelper.safeTransferETH(to, amountOut);
+        TransferHelper.safeTransferUSDC(to, amountOut);
     }
 
     // **** LIBRARY FUNCTIONS ****

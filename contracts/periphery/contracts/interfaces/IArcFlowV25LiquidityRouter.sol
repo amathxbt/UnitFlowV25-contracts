@@ -15,14 +15,14 @@ interface IArcFlowV25LiquidityRouter {
         uint deadline
     ) external returns (uint amountA, uint amountB, uint liquidity);
     
-    function addLiquidityETH(
+    function addLiquidityUSDC(
         address token,
         uint amountTokenDesired,
         uint amountTokenMin,
-        uint amountETHMin,
+        uint amountUSDCMin,
         address to,
         uint deadline
-    ) external payable returns (uint amountToken, uint amountETH, uint liquidity);
+    ) external payable returns (uint amountToken, uint amountUSDC, uint liquidity);
     
     function removeLiquidity(
         address tokenA,
@@ -34,14 +34,14 @@ interface IArcFlowV25LiquidityRouter {
         uint deadline
     ) external returns (uint amountA, uint amountB);
     
-    function removeLiquidityETH(
+    function removeLiquidityUSDC(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountETHMin,
+        uint amountUSDCMin,
         address to,
         uint deadline
-    ) external returns (uint amountToken, uint amountETH);
+    ) external returns (uint amountToken, uint amountUSDC);
     
     function removeLiquidityWithPermit(
         address tokenA,
@@ -54,34 +54,34 @@ interface IArcFlowV25LiquidityRouter {
         bool approveMax, uint8 v, bytes32 r, bytes32 s
     ) external returns (uint amountA, uint amountB);
     
-    function removeLiquidityETHWithPermit(
+    function removeLiquidityUSDCWithPermit(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountETHMin,
+        uint amountUSDCMin,
         address to,
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
-    ) external returns (uint amountToken, uint amountETH);
+    ) external returns (uint amountToken, uint amountUSDC);
     
-    function removeLiquidityETHSupportingFeeOnTransferTokens(
+    function removeLiquidityUSDCSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountETHMin,
+        uint amountUSDCMin,
         address to,
         uint deadline
-    ) external returns (uint amountETH);
+    ) external returns (uint amountUSDC);
     
-    function removeLiquidityETHWithPermitSupportingFeeOnTransferTokens(
+    function removeLiquidityUSDCWithPermitSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountETHMin,
+        uint amountUSDCMin,
         address to,
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
-    ) external returns (uint amountETH);
+    ) external returns (uint amountUSDC);
 
     function quote(uint amountA, uint reserveA, uint reserveB) external pure returns (uint amountB);
 }
