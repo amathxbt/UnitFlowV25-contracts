@@ -1,6 +1,6 @@
 pragma solidity =0.6.6;
 
-import '@uniswap/v2-core/contracts/interfaces/IArcFlowV25Callee.sol';
+import '../core/contracts/interfaces/IArcFlowV25Callee.sol';
 
 import '../libraries/ArcFlowV25Library.sol';
 import '../interfaces/V1/IUniswapV1Factory.sol';

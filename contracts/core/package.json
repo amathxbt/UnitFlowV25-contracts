@@ -1,5 +1,5 @@
 {
-  "name": "@uniswap/v2-core",
+  "name": "../core",
   "description": "🎛 Core contracts for the UniswapV2 protocol",
   "version": "1.0.1",
   "homepage": "https://uniswap.org",

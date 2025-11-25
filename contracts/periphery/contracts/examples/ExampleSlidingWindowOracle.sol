@@ -1,7 +1,7 @@
 pragma solidity =0.6.6;
 
-import '@uniswap/v2-core/contracts/interfaces/IArcFlowV25Factory.sol';
-import '@uniswap/v2-core/contracts/interfaces/IArcFlowV25Pair.sol';
+import '../core/contracts/interfaces/IArcFlowV25Factory.sol';
+import '../core/contracts/interfaces/IArcFlowV25Pair.sol';
 import '@uniswap/lib/contracts/libraries/FixedPoint.sol';
 
 import '../libraries/SafeMath.sol';
