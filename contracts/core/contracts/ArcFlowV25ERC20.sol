@@ -7,7 +7,7 @@ contract ArcFlowV25ERC20 is IArcFlowV25ERC20 {
     using SafeMath for uint;
 
     string public constant name = 'ArcFlow V25';
-    string public constant symbol = 'UNI-V2';
+    string public constant symbol = 'AFF-V25';
     uint8 public constant decimals = 18;
     uint  public totalSupply;
     mapping(address => uint) public balanceOf;
