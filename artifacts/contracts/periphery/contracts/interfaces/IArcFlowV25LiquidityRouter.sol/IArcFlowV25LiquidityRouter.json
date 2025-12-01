@@ -99,7 +99,7 @@
         },
         {
           "internalType": "uint256",
-          "name": "amountETHMin",
+          "name": "amountUSDCMin",
           "type": "uint256"
         },
         {
@@ -113,7 +113,7 @@
           "type": "uint256"
         }
       ],
-      "name": "addLiquidityETH",
+      "name": "addLiquidityUSDC",
       "outputs": [
         {
           "internalType": "uint256",
@@ -122,7 +122,7 @@
         },
         {
           "internalType": "uint256",
-          "name": "amountETH",
+          "name": "amountUSDC",
           "type": "uint256"
         },
         {
@@ -249,7 +249,7 @@
         },
         {
           "internalType": "uint256",
-          "name": "amountETHMin",
+          "name": "amountUSDCMin",
           "type": "uint256"
         },
         {
@@ -263,7 +263,7 @@
           "type": "uint256"
         }
       ],
-      "name": "removeLiquidityETH",
+      "name": "removeLiquidityUSDC",
       "outputs": [
         {
           "internalType": "uint256",
@@ -272,7 +272,7 @@
         },
         {
           "internalType": "uint256",
-          "name": "amountETH",
+          "name": "amountUSDC",
           "type": "uint256"
         }
       ],
@@ -298,7 +298,7 @@
         },
         {
           "internalType": "uint256",
-          "name": "amountETHMin",
+          "name": "amountUSDCMin",
           "type": "uint256"
         },
         {
@@ -312,11 +312,11 @@
           "type": "uint256"
         }
       ],
-      "name": "removeLiquidityETHSupportingFeeOnTransferTokens",
+      "name": "removeLiquidityUSDCSupportingFeeOnTransferTokens",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "amountETH",
+          "name": "amountUSDC",
           "type": "uint256"
         }
       ],
@@ -342,7 +342,7 @@
         },
         {
           "internalType": "uint256",
-          "name": "amountETHMin",
+          "name": "amountUSDCMin",
           "type": "uint256"
         },
         {
@@ -376,7 +376,7 @@
           "type": "bytes32"
         }
       ],
-      "name": "removeLiquidityETHWithPermit",
+      "name": "removeLiquidityUSDCWithPermit",
       "outputs": [
         {
           "internalType": "uint256",
@@ -385,7 +385,7 @@
         },
         {
           "internalType": "uint256",
-          "name": "amountETH",
+          "name": "amountUSDC",
           "type": "uint256"
         }
       ],
@@ -411,7 +411,7 @@
         },
         {
           "internalType": "uint256",
-          "name": "amountETHMin",
+          "name": "amountUSDCMin",
           "type": "uint256"
         },
         {
@@ -445,11 +445,11 @@
           "type": "bytes32"
         }
       ],
-      "name": "removeLiquidityETHWithPermitSupportingFeeOnTransferTokens",
+      "name": "removeLiquidityUSDCWithPermitSupportingFeeOnTransferTokens",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "amountETH",
+          "name": "amountUSDC",
           "type": "uint256"
         }
       ],
