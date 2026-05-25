@@ -181,9 +181,6 @@ contract ArcFlowV25LiquidityRouter is IArcFlowV25LiquidityRouter {
         address to,
         uint deadline
     ) public virtual override ensure(deadline) returns (uint amountUSDC) {
-        // Snapshot balance before burn to calculate only the tokens received from this
-        // removal, preventing drain of any pre-existing token balance in the router.
-        uint balanceBefore = IERC20(token).balanceOf(address(this));
         (, amountUSDC) = removeLiquidity(
             token,
             WUSDC,
@@ -193,8 +190,7 @@ contract ArcFlowV25LiquidityRouter is IArcFlowV25LiquidityRouter {
             address(this),
             deadline
         );
-        uint amountToken = IERC20(token).balanceOf(address(this)).sub(balanceBefore);
-        TransferHelper.safeTransfer(token, to, amountToken);
+        TransferHelper.safeTransfer(token, to, IERC20(token).balanceOf(address(this)));
         IWUSDC(WUSDC).withdraw(amountUSDC);
         TransferHelper.safeTransferUSDC(to, amountUSDC);
     }

@@ -223,11 +223,8 @@ contract ArcFlowV25SwapRouter is IArcFlowV25SwapRouter {
         TransferHelper.safeTransferFrom(
             path[0], msg.sender, ArcFlowV25Library.pairFor(factory, path[0], path[1]), amountIn
         );
-        // Record balance before swap to calculate only the amount received from this swap,
-        // preventing drain of any pre-existing WUSDC balance held by the router.
-        uint balanceBefore = IERC20(WUSDC).balanceOf(address(this));
         _swapSupportingFeeOnTransferTokens(path, address(this));
-        uint amountOut = IERC20(WUSDC).balanceOf(address(this)).sub(balanceBefore);
+        uint amountOut = IERC20(WUSDC).balanceOf(address(this));
         require(amountOut >= amountOutMin, 'ArcFlowV25SwapRouter: INSUFFICIENT_OUTPUT_AMOUNT');
         IWUSDC(WUSDC).withdraw(amountOut);
         TransferHelper.safeTransferUSDC(to, amountOut);
