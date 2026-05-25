@@ -163,13 +163,14 @@ forge create contracts/ArcFlowNFT.sol:ArcFlowNFT \
 - **Ranking System**: Based on Activity NFT count, not points
 - **Total Supply Metrics**: Available for both Genesis Pass and Activity NFTs
 
-## Contract Address
+## Contract Addresses (Arc Testnet)
 
-After deployment, update this section with the deployed contract address:
-
-```
-Arc Testnet: 0x... (TO BE DEPLOYED)
-```
+| Contract | Address |
+|---|---|
+| ArcFlowV25Factory | `0xb7A910200EB187e94296FaE504FbdDC048aA22C9` |
+| ArcFlowV25SwapRouter | `0xb71FCd6a9690A5356fff6C9c930818B0f04fE053` |
+| ArcFlowV25LiquidityRouter | `0xB568839775e59a68818d181fc3f020d8A5Fd107A` |
+| WUSDC | `0x911b4000D3422F482F4062a913885f7b035382Df` |
 
 ## ABI Export
 

@@ -14,7 +14,7 @@ async function main() {
   console.log("Balance:", ethers.formatEther(balance), "ETH\n");
 
   // 👉 SET THESE BEFORE DEPLOYING
-  const FACTORY_ADDRESS = "0xd67F63A4F26a497b364d1C82e6747Aec8B5743a5";
+  const FACTORY_ADDRESS = "0xb7A910200EB187e94296FaE504FbdDC048aA22C9";
   const WUSDC_ADDRESS = "0x911b4000D3422F482F4062a913885f7b035382Df";
 
   console.log("Using Factory:", FACTORY_ADDRESS);

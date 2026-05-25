@@ -186,16 +186,18 @@ contract ArcFlowV25Pair is IArcFlowV25Pair, ArcFlowV25ERC20 {
         emit Swap(msg.sender, amount0In, amount1In, amount0Out, amount1Out, to);
     }
 
-    // force balances to match reserves
+    // force balances to match reserves — restricted to feeToSetter to prevent drain attacks
     function skim(address to) external lock {
+        require(msg.sender == IArcFlowV25Factory(factory).feeToSetter(), 'ArcFlowV25: FORBIDDEN');
         address _token0 = token0; // gas savings
         address _token1 = token1; // gas savings
         _safeTransfer(_token0, to, IERC20(_token0).balanceOf(address(this)).sub(reserve0));
         _safeTransfer(_token1, to, IERC20(_token1).balanceOf(address(this)).sub(reserve1));
     }
 
-    // force reserves to match balances
+    // force reserves to match balances — restricted to feeToSetter to prevent reserve manipulation
     function sync() external lock {
+        require(msg.sender == IArcFlowV25Factory(factory).feeToSetter(), 'ArcFlowV25: FORBIDDEN');
         _update(IERC20(token0).balanceOf(address(this)), IERC20(token1).balanceOf(address(this)), reserve0, reserve1);
     }
 }
